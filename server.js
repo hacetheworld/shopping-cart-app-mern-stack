@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
 require('./db');
 const port = process.env.PORT || 5000
 
 // Body parser middleware
+app.use('/uploads', express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -13,17 +16,21 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Header', '*');
     if (req.method === 'OPTIONS') {
-        req.header('Access-Control-Allow-Methods', 'POST,PUT,PATCH,DELETE,GET');
+        res.header('Access-Control-Allow-Methods', 'POST,PUT,PATCH,DELETE,GET');
         return res.status(200).json({});
     }
     next();
-})
+});
 
-//Intial Route
-app.get('/', (req, res) => {
-    res.send({ msg: 'You are ready to rock' });
-})
 
+const productRouter = require("./api/routes/products");
+const orderRouter = require("./api/routes/orders");
+const userRouter = require("./api/routes/user");
+
+// Routes
+app.use('/api/products', productRouter)
+app.use('/api/order', orderRouter)
+app.use('/api/user', userRouter)
 
 // Start the server
 app.listen(port, () => {
