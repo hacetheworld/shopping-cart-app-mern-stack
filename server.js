@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 //Intial Route
 app.get('/', (req, res) => {
-    res.send({ msg: 'You are ready to rock bro....' });
+    res.send({ msg: 'You are ready to rock' });
 })
 
 
