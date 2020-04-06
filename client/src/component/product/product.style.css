@@ -1,0 +1,16 @@
+.buttons{
+    display: flex;
+    justify-content: space-around;
+}
+.product-info{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.product-info h1{
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-transform: uppercase;
+}

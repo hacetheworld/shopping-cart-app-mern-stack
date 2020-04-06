@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const Product = require('../models/product');
+const Product = require('../models/Product');
 const checkAuth = require("../middleware/check-auth");
 
 const upload = require('../uploadFile');
 
 router.get('/', (req, res, next) => {
     Product.find({})
-        .select('name price productImage _id')
+        .select('name price description productImage _id')
         .exec()
         .then(docs => {
             const products = docs.map(product => {
@@ -32,7 +32,7 @@ router.get('/', (req, res, next) => {
 
 });
 
-router.post('/', upload.single('productImage'), (req, res, next) => {
+router.post('/', checkAuth, upload.single('productImage'), (req, res, next) => {
 
     const product = new Product({
         name: req.body.name,
